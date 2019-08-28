@@ -1,5 +1,6 @@
 module Source2Glo
 
-greet() = print("Hello World!")
+const config_file = "config.json"
+include("configuration.jl")
 
 end # module
