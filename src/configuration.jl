@@ -30,3 +30,9 @@ function unregister( path; config_file = config_file )
     deleteat!( x["paths"], path_ind )
     write_file(config_file, x)
 end # function
+
+function reset_paths(;config_file = config_file)
+    x = parse_file(config_file)
+    x["paths"] = String[]
+    write_file(config_file, x)
+end # function
