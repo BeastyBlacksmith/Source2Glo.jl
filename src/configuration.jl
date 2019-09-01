@@ -5,48 +5,48 @@ function parse_file(file)
     open( config_file ) do io
         x = JSON.parse(io)
     end
-    return x
+    for key in keys(x)
+        setproperty(configuration, key, getproperty(x, key))
+    end
+    return nothing
 end # function
 
 function write_file(file, x)
     open( config_file, "w" ) do io
         JSON.print( io, x )
     end # do
+    return nothing
 end # function
 
-function register( path; config_file = config_file )
-    x = parse_file(config_file)
-    if path ∈ x["paths"]
+function register( path )
+    if path ∈ configuration["paths"]
         return
     end
-    push!(x["paths"], path)
-    write_file(config_file, x)
+    push!(configuration["paths"], path)
+    return nothing
 end # function
-function unregister( path; config_file = config_file )
-    x = parse_file(config_file)
-    path_ind = findfirst(path, x["paths"])
+
+function unregister( path )
+    path_ind = findfirst(path, configuration["paths"])
     if path_ind === nothing
-        @info "Path $path not found.\nRegistered paths are:\n$(x["paths"])"
+        @info "Path $path not found.\nRegistered paths are:\n$(configuration["paths"])"
         return
     end
-    deleteat!( x["paths"], path_ind )
-    write_file(config_file, x)
+    deleteat!( configuration["paths"], path_ind )
+    return nothing
 end # function
 
-function reset_paths(;config_file = config_file)
-    x = parse_file(config_file)
-    x["paths"] = String[]
-    write_file(config_file, x)
+function reset_paths()
+    configuration["paths"] = String[]
+    return nothing
 end # function
 
-function default_header(; config_file = config_file, dec = dec)
-    x = parse_file(config_file)
-    token = String( trim_padding_PKCS5(decrypt( dec, Vector{UInt8}( x["token"] ) )) )
+# FIXME: ...
+function default_header(; dec = dec)
+    token = String( trim_padding_PKCS5(decrypt( dec, Vector{UInt8}( configuration["token"] ) )) )
     ["Content-Type" => "application/json", "Accept" => "application/json", "Authorization" => token]
 end # function
 
-function add_token( pat; enc = enc, config_file = config_file )
-    x = parse_file(config_file)
-    x["token"] = String( encrypt(enc, add_padding_PKCS5(Vector{UInt8}(pat),16) ) )
-    write_file( config_file, x )
+function add_token( pat; enc = enc )
+    configuration["token"] = String( encrypt(enc, add_padding_PKCS5(Vector{UInt8}(pat),16) ) )
 end # function
