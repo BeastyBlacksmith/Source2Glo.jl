@@ -6,20 +6,13 @@ include("configuration.jl")
 
 function __init__()
     if (!isfile)(config_file)
-        open(config_file, "w") do io
-            JSON.print(io, :paths=>String[])
-        end
+        write_file(config_file, :paths=>String[])
     else
-        local x
-        open( config_file ) do io
-            x = JSON.parse(io)
-        end
+        x = parse_file(config_file)
         if haskey(x, "paths")
             return
         end
-        open(config_file, "w") do io
-            JSON.print(io, :paths=>String[])
-        end
+        write_file(config_file, :paths=>String[])
     end
 end # function
 end # module
