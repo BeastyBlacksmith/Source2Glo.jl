@@ -1,7 +1,12 @@
 module Source2Glo
 
 using JSON
+using Nettle
+
+const enc = Encryptor("AES256", hex2bytes("603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4"))
+const dec = Decryptor("AES256", hex2bytes("603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4"))
 const config_file = "config.json"
+
 include("configuration.jl")
 
 function __init__()

@@ -4,7 +4,9 @@ authors = ["Simon Christ"]
 version = "0.1.0"
 
 [deps]
+Glo = "578b42c6-ccb1-11e9-3f90-91546bb1a07d"
 JSON = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
+Nettle = "49dea1ee-f6fa-5aa6-9a11-8816cee7d4b9"
 
 [compat]
 julia = "1"

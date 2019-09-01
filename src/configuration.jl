@@ -1,3 +1,5 @@
+using Nettle
+
 function parse_file(file)
     local x
     open( config_file ) do io
@@ -35,4 +37,16 @@ function reset_paths(;config_file = config_file)
     x = parse_file(config_file)
     x["paths"] = String[]
     write_file(config_file, x)
+end # function
+
+function default_header(; config_file = config_file, dec = dec)
+    x = parse_file(config_file)
+    token = String( trim_padding_PKCS5(decrypt( dec, Vector{UInt8}( x["token"] ) )) )
+    ["Content-Type" => "application/json", "Accept" => "application/json", "Authorization" => token]
+end # function
+
+function add_token( pat; enc = enc, config_file = config_file )
+    x = parse_file(config_file)
+    x["token"] = String( encrypt(enc, add_padding_PKCS5(Vector{UInt8}(pat),16) ) )
+    write_file( config_file, x )
 end # function
