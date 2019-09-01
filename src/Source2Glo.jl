@@ -18,19 +18,19 @@ function __init__()
     if (!isfile)(config_file[])
         write_file(config_file[], :paths=>String[])
     end
-    parse_file(config_file)
+    parse_file(config_file[])
     if !haskey(configuration, "paths")
-        write_file(config_file, :paths=>String[])
+        configuration["paths"] = String[]
     end
-    if !haskey(configuration, "token")
-        @info "No access token found. Please create one [here](https://app.gitkraken.com/pat/new) and insert below."
-        add_token( readline(stdin) )
-        #TODO: user creates key here (where to store that?)
-    end
-    if !haskey(configuration, "board_id")
-        board = Glo.boards("{\"name\": \".~*~. todo-Source2Glo .~*~.\"}", header = default_header())
-        configuration["board_id"] = board["id"]
-    end
+    # if !haskey(configuration, "token")
+    #     @info "No access token found. Please create one [here](https://app.gitkraken.com/pat/new) and insert below."
+    #     add_token( readline(stdin) )
+    #     #TODO: user creates key here (where to store that?)
+    # end
+    # if !haskey(configuration, "board_id")
+    #     board = Glo.boards("{\"name\": \".~*~. todo-Source2Glo .~*~.\"}", header = default_header())
+    #     configuration["board_id"] = board["id"]
+    # end
 end # function
 atexit(()->write_file(config_file[], configuration))
 end # module

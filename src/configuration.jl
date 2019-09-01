@@ -1,6 +1,6 @@
 using Nettle
 
-function parse_file(file)
+function parse_file(config_file)
     local x
     open( config_file ) do io
         x = JSON.parse(io)
@@ -11,7 +11,7 @@ function parse_file(file)
     return nothing
 end # function
 
-function write_file(file, x)
+function write_file(config_file, x)
     open( config_file, "w" ) do io
         JSON.print( io, x )
     end # do
@@ -48,5 +48,7 @@ function default_header(; dec = dec)
 end # function
 
 function add_token( pat; enc = enc )
+    @show pat
     configuration["token"] = String( encrypt(enc, add_padding_PKCS5(Vector{UInt8}(pat),16) ) )
+    return nothing
 end # function
