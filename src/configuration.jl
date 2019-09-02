@@ -6,7 +6,7 @@ function parse_file(config_file)
         x = JSON.parse(io)
     end
     for key in keys(x)
-        setproperty(configuration, key, getproperty(x, key))
+        setindex!(configuration, getindex(x, key), key )
     end
     return nothing
 end # function
