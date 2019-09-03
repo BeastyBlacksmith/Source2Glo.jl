@@ -49,6 +49,8 @@ end # function
 
 function add_token( pat; enc = enc )
     @show pat
-    configuration["token"] = String( encrypt(enc, add_padding_PKCS5(Vector{UInt8}(pat),16) ) )
+    @show add_padding_PKCS5(Vector{UInt8}(pat),16) |> String
+    @show String( encrypt(enc, add_padding_PKCS5(Vector{UInt8}(pat),16) ) )
+    # configuration["token"] = String( encrypt(enc, add_padding_PKCS5(Vector{UInt8}(pat),16) ) )
     return nothing
 end # function
