@@ -31,6 +31,6 @@ function __init__()
         board = Glo.boards("{\"name\": \".~*~. todo-Source2Glo .~*~.\"}", header = default_header())
         configuration["board_id"] = board["id"]
     end
+    atexit(()->write_file(config_file[], configuration))
 end # function
-# atexit(()->write_file(config_file[], configuration))
 end # module
