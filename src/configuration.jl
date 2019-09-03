@@ -41,16 +41,14 @@ function reset_paths()
     return nothing
 end # function
 
-# FIXME: ...
-function default_header(; dec = dec)
-    token = String( trim_padding_PKCS5(decrypt( dec, Vector{UInt8}( configuration["token"] ) )) )
+function default_header(; key = key[])
+    token = String( trim_padding_PKCS5(decrypt( Decryptor("AES256", key), Vector{UInt8}( configuration["token"] ) )) )
     ["Content-Type" => "application/json", "Accept" => "application/json", "Authorization" => token]
 end # function
 
-function add_token( pat; enc = enc )
-    @show pat
-    @show add_padding_PKCS5(Vector{UInt8}(pat),16) |> String
-    @show String( encrypt(enc, add_padding_PKCS5(Vector{UInt8}(pat),16) ) )
-    # configuration["token"] = String( encrypt(enc, add_padding_PKCS5(Vector{UInt8}(pat),16) ) )
+function add_token( pat; key = key[] )
+    configuration["token"] = String( encrypt(
+        Encryptor("AES256", key),
+        add_padding_PKCS5(Vector{UInt8}(pat),16) ) )
     return nothing
 end # function
