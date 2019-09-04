@@ -7,12 +7,13 @@ struct TODO
     project::String
 end
 
+# TODO: define json method for it
 function Base.show(io::IO, todo::TODO)
     println(io,
         """
         $(todo.project):
-        \e[1m$(todo.indicator)\e[0m $(todo.text)
         in $(todo.file) : line $(Int(todo.line_number))
+        \e[1m$(todo.indicator)\e[0m $(todo.text)
         """
     )
 end # function
