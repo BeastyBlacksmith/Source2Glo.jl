@@ -1,4 +1,3 @@
-# TODO: find me
 struct TODO
     indicator::String
     text::String
@@ -25,17 +24,15 @@ function find_todos()
             if startswith(splitdir(root)[2], '.')
                 continue
             end
-            # TODO: make this configurable
-            filter!(f->endswith(f,".jl"), files)
+            filter!(f->any(endswith.(f,configuration["file-endings"])), files)
             for file in files
                 open( joinpath(root,file) ) do io
                     line_number = 0
                     for line in eachline(io)
                         line_number += 1
-                        # TODO: add more identifiers
-                        the_match = match( r"#\s*TODO(.*)", line )
+                        the_match = match( Regex("($(join(configuration["identifiers"],"|")))\\s*:\\s*(.*)"), line )
                         if the_match !== nothing
-                            push!( todos, TODO("TODO", the_match.captures[1], file, line_number, project) )
+                            push!( todos, TODO(the_match.captures[1], the_match.captures[2], file, line_number, project) )
                         end
                     end
                 end

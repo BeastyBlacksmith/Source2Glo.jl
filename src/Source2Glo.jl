@@ -20,6 +20,12 @@ function __init__()
     if !haskey(configuration, "paths")
         configuration["paths"] = String[]
     end
+    if !haskey(configuration, "file-endings")
+        configuration["file-endings"] = [".jl",".txt",".md",".tex",".h",".c",".cpp"]
+    end
+    if !haskey(configuration, "identifiers")
+        configuration["identifiers"] = ["TODO","FIXME","todo\""]
+    end
     if !haskey(configuration, "token")
         @info "No access token found. Please create one [here](https://app.gitkraken.com/pat/new) and insert below."
         add_token( readline(stdin), key = key[] )
