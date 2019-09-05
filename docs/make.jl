@@ -9,7 +9,6 @@ makedocs(;
     repo="https://github.com/beastyblacksmith/Source2Glo.jl/blob/{commit}{path}#L{line}",
     sitename="Source2Glo.jl",
     authors="Simon Christ",
-    assets=String[],
 )
 
 deploydocs(;
