@@ -1,3 +1,4 @@
+#TODO: test this
 function update_board(;header = default_header())
     board_id = Glo.BoardID( configuration["board_id"] )
     cards = Glo.boards_cards( board_id, header = header )

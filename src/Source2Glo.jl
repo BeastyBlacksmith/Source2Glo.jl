@@ -13,6 +13,8 @@ include("todo-scan.jl")
 include("board-managment.jl")
 
 function __init__()
+    @info "Enter your password. (This will become your password if this is your first visit.)"
+    key[] = Vector{UInt8}(readline(stdin))
     if !isfile(config_file[])
         write_file(config_file[], :paths=>String[])
     end
@@ -29,7 +31,6 @@ function __init__()
     if !haskey(configuration, "token")
         @info "No access token found. Please create one [here](https://app.gitkraken.com/pat/new) and insert below."
         add_token( readline(stdin), key = key[] )
-        #TODO: make key = password
     end
     if !haskey(configuration, "board_id")
         board = Glo.boards(:name => ".~*~. todo-Source2Glo .~*~.", header = default_header())
