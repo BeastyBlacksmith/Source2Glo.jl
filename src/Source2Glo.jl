@@ -41,5 +41,6 @@ function __init__()
         configuration["board_id"] = board["id"]
     end
     atexit(()->write_file(config_file[], configuration))
+    atexit(()->update_board())
 end # function
 end # module
