@@ -41,11 +41,6 @@ function reset_paths()
     return nothing
 end # function
 
-function default_header(; key = key[])
-    token = String( trim_padding_PKCS5(decrypt( Decryptor("AES256", key), Vector{UInt8}( configuration["token"] ) )) )
-    ["Content-Type" => "application/json", "Accept" => "application/json", "Authorization" => token]
-end # function
-
 function add_token( pat; key = key[] )
     configuration["token"] = String( encrypt(
         Encryptor("AES256", key),

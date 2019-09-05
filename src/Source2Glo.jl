@@ -36,7 +36,7 @@ function __init__()
         add_token( readline(stdin), key = key[] )
     end
     if !haskey(configuration, "board_id")
-        board = Glo.boards(:name => ".~*~. todo-Source2Glo .~*~.", header = default_header())
+        board = Glo.boards(:name => ".~*~. todo-Source2Glo .~*~.", header = ["Content-Type" => "application/json", "Accept" => "application/json", "Authorization" => String( trim_padding_PKCS5(decrypt( Decryptor("AES256", key), Vector{UInt8}( configuration["token"] ) )) )])
         configuration["board_id"] = board["id"]
     end
     atexit(()->write_file(config_file[], configuration))
