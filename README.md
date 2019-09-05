@@ -16,6 +16,9 @@ Register your projects via `Source2Glo.register("path/to/project")`.
 
 Source2Glo will create a board named `.~*~. todo-Source2Glo .~*~.` and create columns for each project and cards for each TODO found.
 
-Updates your Glo-board automatically when exiting julia or trigger it manually with `Source2Glo.update_board()`.
+Updates your Glo-board has three modes
+ - automatically when exiting julia with `Source2Glo.configuration["update-mode"] = "at-exit"`
+ - automatically when loading Source2Glo with `Source2Glo.configuration["update-mode"] = "at-start"`
+ - trigger it manually with `Source2Glo.update_board()`.
 
 Once configured, all you need to do is put `using Source2Glo` in `~/.julia/config/startup.jl` and your TODOs will always be synced.

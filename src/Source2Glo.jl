@@ -26,6 +26,9 @@ function __init__()
     if !haskey(configuration, "paths")
         configuration["paths"] = String[]
     end
+    if !haskey(configuration, "update-mode")
+        configuration["update-mode"] = "manual"
+    end
     if !haskey(configuration, "file-endings")
         configuration["file-endings"] = [".jl",".txt",".md",".tex",".h",".c",".cpp"]
     end
@@ -41,6 +44,10 @@ function __init__()
         configuration["board_id"] = board["id"]
     end
     atexit(()->write_file(config_file[], configuration))
-    atexit(()->update_board())
+    if configuration["update-mode"] == "at-exit"
+        atexit(()->update_board())
+    elseif configuration["update-mode"] == "at-start"
+        @async update_board()
+    end
 end # function
 end # module
