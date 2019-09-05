@@ -2,7 +2,7 @@ using Documenter, Source2Glo
 
 makedocs(;
     modules=[Source2Glo],
-    format=Documenter.HTML(),
+    format=Documenter.HTML(prettyurls=false),
     pages=[
         "Home" => "index.md",
     ],
