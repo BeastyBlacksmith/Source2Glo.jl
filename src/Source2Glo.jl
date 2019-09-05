@@ -7,7 +7,7 @@ using Nettle
 export Glo
 
 const key = Ref(hex2bytes("603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4"))
-const config_file = Ref(joinpath(@__DIR__,"../config.json"))
+const config_file = Ref(joinpath(homedir(),".julia/config/Source2Glo/config.json"))
 const configuration = Dict{String,Any}()
 
 include("configuration.jl")
@@ -19,6 +19,7 @@ function __init__()
     # @info "Enter your password. (This will become your password if this is your first visit.)"
     # key[] = Vector{UInt8}(readline(stdin))
     if !isfile(config_file[])
+        mkpath(dirname(config_file[]))
         write_file(config_file[], :paths=>String[])
     end
     parse_file(config_file[])
